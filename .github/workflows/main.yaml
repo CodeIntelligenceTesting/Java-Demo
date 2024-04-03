@@ -16,7 +16,7 @@ on:
 env:
   # Timeout until the pipeline is marked as 'success'
   # if during that time no failing findings are found.
-  TIMEOUT: "60m"
+  TIMEOUT: "30m"
   # Minimum severity for findings that causes the pipeline to fail.
   # Findings with lower severity are still reported but do not fail
   # the pipeline.
