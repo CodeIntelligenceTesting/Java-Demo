@@ -54,7 +54,7 @@ jobs:
           version: 'latest'
       - id: run-fuzz-tests
         name: Run Fuzz Tests
-        uses: CodeIntelligenceTesting/github-actions/run-fuzz-tests@v6
+        uses: CodeIntelligenceTesting/github-actions/run-fuzz-tests@v6-keep-monitoring
         with:
           ci_sense_api_token: ${{ secrets.CI_SENSE_API_TOKEN }}
           project_name: ${{ env.PROJECT }}
