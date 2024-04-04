@@ -4,6 +4,8 @@ import com.demo.Controller.CarCategoryController;
 import com.demo.dto.CarCategoryDTO;
 import com.demo.dto.UserDTO;
 import com.demo.helper.DatabaseMock;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -85,14 +87,20 @@ public class CarCategoryHandler {
     }
 
     /**
-     * Vulnerable handler function that requests an ID from the DB without checking if it's initialized.
-     * Called by {@link CarCategoryController#createCategory(String, CarCategoryDTO)}
+     * Vulnerable handler function that attempts to check that the date time is acceptable, but not catching the hidden runtime exception.
+     * Called by {@link CarCategoryController#createCategory(String, CarCategoryDTO)}.
+     * Error is hidden in {@link CarCategoryDTO#verifyCreationDate()}.
      * @param categoryDTO dto to save
      * @return id of newly saved category.
      */
     public static String createCategory(CarCategoryDTO categoryDTO){
-        // db.getNextFreeCategoryId() is a call to the db without checking if initialized
-        return updateCategory(categoryDTO, db.getNextFreeCategoryId());
+        dbInitCheck();
+        //Not catching WrongDateTimeFormat exceptions
+        if (categoryDTO.verifyCreationDate()) {
+            return updateCategory(categoryDTO, db.getNextFreeCategoryId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
