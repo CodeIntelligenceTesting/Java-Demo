@@ -5,7 +5,6 @@ import com.demo.dto.CarCategoryDTO;
 import com.demo.dto.UserDTO;
 import com.demo.handler.CarCategoryHandler;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -31,12 +30,16 @@ public class DatabaseMock {
 
         categoryStorage.put("1", new CarCategoryDTO(
                 "Small and budget friendly cars",
-                UserDTO.Role.DEFAULT_USER,
-                LocalDateTime.now().toString()));
+                CarCategoryDTO.TrunkSize.ONE_CASE,
+                4,
+                "Open Corsa",
+                UserDTO.Role.DEFAULT_USER));
         categoryStorage.put("2", new CarCategoryDTO(
                 "Nice Convertibles",
-                UserDTO.Role.DEFAULT_USER,
-                LocalDateTime.now().toString()));
+                CarCategoryDTO.TrunkSize.ONE_CASE,
+                4,
+                "Porsche Turbo Convertible",
+                UserDTO.Role.DEFAULT_USER));
 
         userStorage.put("1",
                 new UserDTO(
