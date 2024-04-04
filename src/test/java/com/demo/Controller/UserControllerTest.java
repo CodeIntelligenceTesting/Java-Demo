@@ -138,7 +138,7 @@ public class UserControllerTest {
     }
 
     /**
-     * Fuzz test function that checks the {@link UserController#createUser(String, UserDTO)}endpoint.
+     * Fuzz test function that checks the {@link UserController#createUser(String, UserDTO)} endpoint.
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestCreateUser</code> or
      * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestCreateUser</code>.
