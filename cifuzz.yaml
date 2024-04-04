@@ -29,7 +29,7 @@
 ## See https://llvm.org/docs/LibFuzzer.html#options
 engine-args:
   - -use_value_profile=1
-  - --instrumentation_includes=com.demo.Controller.**:com.demo.dto.**:com.demo.handler.**:com.unboundid.ldap.sdk.**
+  - --instrumentation_includes=com.demo.Controller.**:com.demo.dto.**:com.demo.handler.**:com.demo.libraries.**:com.unboundid.ldap.sdk.**
 # - -rss_limit_mb=4096
 
 ## Maximum time to run fuzz tests. The default is to run indefinitely.
