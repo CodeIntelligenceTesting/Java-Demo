@@ -29,11 +29,11 @@
 ## See https://llvm.org/docs/LibFuzzer.html#options
 engine-args:
   - -use_value_profile=1
-  - --instrumentation_includes=com.demo.**:com.google.json.**:com.unboundid.ldap.sdk.**
+  - --instrumentation_includes=com.demo.Controller.**:com.demo.dto.**:com.demo.handler.**:com.demo.libraries.**:com.unboundid.ldap.sdk.**
 # - -rss_limit_mb=4096
 
 ## Maximum time to run fuzz tests. The default is to run indefinitely.
-timeout: 60m
+timeout: 30m
 
 ## By default, fuzz tests are executed in a sandbox to prevent accidental
 ## damage to the system. Set to false to run fuzz tests unsandboxed.
