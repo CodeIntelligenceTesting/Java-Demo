@@ -65,7 +65,7 @@ public class UserControllerTest {
                             .param("role", "DEFAULT_ROLE")
                             .content(om.writeValueAsString(new UserDTO()))
                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk());
+                    .andExpect(status().isForbidden());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
