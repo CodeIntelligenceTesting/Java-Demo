@@ -2,7 +2,6 @@ package com.demo.Controller;
 
 import com.code_intelligence.jazzer.junit.FuzzTest;
 import com.code_intelligence.jazzer.mutation.annotation.NotNull;
-import com.code_intelligence.jazzer.mutation.annotation.UrlSegment;
 import com.code_intelligence.jazzer.mutation.annotation.WithUtf8Length;
 import com.demo.dto.UserDTO;
 import com.demo.helper.CustomMatchers;
@@ -18,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
 @AutoConfigureMockMvc(print = MockMvcPrint.NONE)
@@ -25,6 +25,51 @@ public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    /**
+     * Fuzz test function that checks the {@link UserController#updateOrCreateUser(String, String, UserDTO)} endpoint.
+     * <p/>
+     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code> or
+     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code>.
+     * Finds a security issue in form of an SQL Injection vulnerability.
+     * <p/>
+     * @param id parameter filled in by the fuzzer.
+     * @param role parameter filled in by the fuzzer.
+     * @throws Exception uncaught exceptions for the fuzzer to detect issues.
+     */
+    @FuzzTest
+    public void fuzzTestUpdateOrCreateUser(@NotNull @WithUtf8Length(min=1, max=5) String id,
+                                           @NotNull String role,
+                                           @NotNull UserDTO userDTO) throws Exception {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            mockMvc.perform(put("/user/{id}", id)
+                            .param("role", role)
+                            .content(om.writeValueAsString(userDTO))
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(CustomMatchers.isNot5xxServerError());
+        } catch (IllegalArgumentException e) {
+            ExceptionCleaner.cleanException(e);
+        }
+    }
+
+    /**
+     * Example unit Test for user-controller put endpoint.
+     * @throws Exception uncaught exception
+     */
+    @Test
+    public void unitTestUpdateOrCreateUser() throws Exception {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            mockMvc.perform(put("/user/{id}", "id")
+                            .param("role", "DEFAULT_ROLE")
+                            .content(om.writeValueAsString(new UserDTO()))
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isForbidden());
+        } catch (IllegalArgumentException e) {
+            ExceptionCleaner.cleanException(e);
+        }
+    }
 
     /**
      * Fuzz test function that checks the {@link UserController#getUsers(String)} endpoint.
@@ -108,33 +153,6 @@ public class UserControllerTest {
             ExceptionCleaner.cleanException(e);
         }
 
-    }
-
-    /**
-     * Fuzz test function that checks the {@link UserController#updateOrCreateUser(String, String, UserDTO)} endpoint.
-     * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code> or
-     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code>.
-     * Finds a security issue in form of an SQL Injection vulnerability.
-     * <p/>
-     * @param id parameter filled in by the fuzzer.
-     * @param role parameter filled in by the fuzzer.
-     * @throws Exception uncaught exceptions for the fuzzer to detect issues.
-     */
-    @FuzzTest
-    public void fuzzTestUpdateOrCreateUser(@NotNull @WithUtf8Length(min=1, max=5) String id,
-                                           @NotNull String role,
-                                           @NotNull UserDTO userDTO) throws Exception {
-        try {
-        ObjectMapper om = new ObjectMapper();
-            mockMvc.perform(put("/user/{id}", id)
-                            .param("role", role)
-                            .content(om.writeValueAsString(userDTO))
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
     }
 
     /**
