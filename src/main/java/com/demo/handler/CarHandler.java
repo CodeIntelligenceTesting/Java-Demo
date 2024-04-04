@@ -45,7 +45,7 @@ public class CarHandler {
      * @param id id of the specific car
      * @return boolean if deletion was successful
      */
-    public static boolean deleteCarWithId(String id){
+    public static String deleteCarWithId(String id){
         dbInitCheck();
         return db.deleteCarWithId(id);
     }
@@ -55,13 +55,14 @@ public class CarHandler {
      * Throws exception if created
      * @param dto car dto to save
      */
-    public static void createNewCar(CarDTO dto){
+    public static String createNewCar(CarDTO dto){
         dbInitCheck();
         String nextId = db.getNextCarId();
         if (db.getCarWithId(nextId) != null) {
             throw new CarIdGenerationException("Call to get next id resulted in already existing id.");
         } else {
             db.createOrUpdateCar(dto, nextId);
+            return nextId;
         }
     }
 
@@ -70,9 +71,10 @@ public class CarHandler {
      * @param dto new data to save
      * @param id id of car
      */
-    public static void updateCar(CarDTO dto, String id){
+    public static String updateCar(CarDTO dto, String id){
         dbInitCheck();
         db.createOrUpdateCar(dto, id);
+        return id;
     }
 
 }

@@ -180,11 +180,15 @@ public class DatabaseMock {
         return carStorage.values();
     }
 
-    public boolean deleteCarWithId(String id) {
+    public String deleteCarWithId(String id) {
         if (id == null) {
-            return false;
+            return null;
         }
         checkIfInitialised();
-        return carStorage.remove(id) != null;
+        if (carStorage.remove(id) != null) {
+            return id;
+        } else {
+            return null;
+        }
     }
 }

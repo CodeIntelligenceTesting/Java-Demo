@@ -12,12 +12,14 @@ public class CarCategoryDTO {
         FOUR_CASES;
 
         public static TrunkSize fromString(String enumString) {
-            return switch (enumString.toUpperCase()) {
-                case "TWO_CASES" -> TWO_CASES;
-                case "THREE_CASES" -> THREE_CASES;
-                case "FOUR_CASES" -> FOUR_CASES;
-                default -> ONE_CASE;
-            };
+            if (enumString.equalsIgnoreCase("TWO_CASES")) {
+                return TWO_CASES;
+            } else if (enumString.equalsIgnoreCase("THREE_CASES")) {
+                return THREE_CASES;
+            } else if (enumString.equalsIgnoreCase("FOUR_CASES")) {
+                return FOUR_CASES;
+            }
+            return ONE_CASE;
         }
     }
     private String description;

@@ -40,47 +40,47 @@ public class CarControllerTest {
      */
     @FuzzTest
     public void fuzzTestCarEndpoints(@NotNull @WithSize(min = 5, max = 15) List< @NotNull Integer> functionOrder,
-                                     @NotNull @WithSize(min = 5, max = 15) List< @UrlSegment String> ids,
-                                     @NotNull @WithSize(min = 5, max = 15) List< @NotNull CarDTO> dtos) throws Exception {
+                                     @NotNull @WithSize(min = 5, max = 15) List< @NotNull @WithSize(min = 5, max = 15) String> ids,
+                                     @NotNull @WithSize(min = 5, max = 15) List< @NotNull CarDTO> dtos,
+                                     @NotNull @WithSize(min = 5, max = 15) List<Boolean> reuseReturnedIds) throws Exception {
         ObjectMapper om = new ObjectMapper();
+        String nextId = ids.removeLast();
+        String lastReturnedId = null;
 
         // Call the endpoints in a loop
         while (!functionOrder.isEmpty()) {
             try {
                 // let the fuzzer decide the call order
-                switch (functionOrder.getLast()) {
-                    case 0 -> {
-                        mockMvc.perform(get("/car"))
-                                .andExpect(CustomMatchers.isNot5xxServerError());
-                    }
-                    case 1 -> {
-                        mockMvc.perform(get("/car/{id}", ids.getLast()))
-                                .andExpect(CustomMatchers.isNot5xxServerError());
-                        ids.removeLast();
-                    }
-                    case 2 -> {
-                        mockMvc.perform(delete("/car/{id}", ids.getLast()))
-                                .andExpect(CustomMatchers.isNot5xxServerError());
-                        ids.removeLast();
-                    }
-                    case 3 -> {
-                        mockMvc.perform(put("/car/{id}", ids.getLast())
-                                .content(om.writeValueAsString(dtos.getLast()))
-                                .contentType(MediaType.APPLICATION_JSON))
-                                .andExpect(CustomMatchers.isNot5xxServerError());
-                        ids.removeLast();
-                        dtos.removeLast();
-                    }
-                    default -> {
-                        mockMvc.perform(post("/car")
-                                        .content(om.writeValueAsString(dtos.getLast()))
-                                        .contentType(MediaType.APPLICATION_JSON))
-                                .andExpect(CustomMatchers.isNot5xxServerError());
-                        dtos.removeLast();
+                Integer last = functionOrder.removeLast();
+                if (last == 0) {
+                    mockMvc.perform(get("/car"))
+                            .andExpect(CustomMatchers.isNot5xxServerError());
+                } else if (last == 1) {
+                    mockMvc.perform(get("/car/{id}", nextId))
+                            .andExpect(CustomMatchers.isNot5xxServerError());
+                } else if (last == 2) {
+                    lastReturnedId = mockMvc.perform(delete("/car/{id}", nextId))
+                            .andExpect(CustomMatchers.isNot5xxServerError())
+                            .andReturn().getResponse().getContentAsString();
+                } else if (last == 3) {
+                    lastReturnedId = mockMvc.perform(put("/car/{id}", nextId)
+                                    .content(om.writeValueAsString(dtos.removeLast()))
+                                    .contentType(MediaType.APPLICATION_JSON))
+                            .andExpect(CustomMatchers.isNot5xxServerError())
+                            .andReturn().getResponse().getContentAsString();
+                } else {
+                    lastReturnedId = mockMvc.perform(post("/car")
+                                    .content(om.writeValueAsString(dtos.removeLast()))
+                                    .contentType(MediaType.APPLICATION_JSON))
+                            .andExpect(CustomMatchers.isNot5xxServerError())
+                            .andReturn().getResponse().getContentAsString();
+                }
+                if (lastReturnedId != null) {
+                    if (reuseReturnedIds.removeLast()) {
+                        nextId = lastReturnedId;
+                        lastReturnedId = null;
                     }
                 }
-
-                functionOrder.removeLast();
             } catch (IllegalArgumentException e) {
                 ExceptionCleaner.cleanException(e);
             } catch (NoSuchElementException ignored){

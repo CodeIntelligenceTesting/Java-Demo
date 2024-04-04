@@ -33,7 +33,7 @@ public class CarController {
      * @return JSON boolean
      */
     @DeleteMapping("/car/{id}")
-    public boolean deleteCar(@PathVariable String id) {
+    public String deleteCar(@PathVariable String id) {
         return CarHandler.deleteCarWithId(id);
     }
 
@@ -43,9 +43,9 @@ public class CarController {
      * @param dto new DTO to create
      */
     @PostMapping("/car")
-    public void createCar(@RequestBody CarDTO dto) {
+    public String createCar(@RequestBody CarDTO dto) {
         // Missing try-catch block
-        CarHandler.createNewCar(dto);
+        return CarHandler.createNewCar(dto);
     }
 
     /**
@@ -53,7 +53,7 @@ public class CarController {
      * @param id car id
      */
     @PutMapping("/car/{id}")
-    public void updateCar(@PathVariable String id, @RequestBody CarDTO dto) {
-        CarHandler.updateCar(dto, id);
+    public String updateCar(@PathVariable String id, @RequestBody CarDTO dto) {
+        return CarHandler.updateCar(dto, id);
     }
 }
