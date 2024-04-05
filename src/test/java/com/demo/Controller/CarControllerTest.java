@@ -79,7 +79,11 @@ public class CarControllerTest {
                     if (reuseReturnedIds.removeLast()) {
                         nextId = lastReturnedId;
                         lastReturnedId = null;
+                    } else {
+                        nextId = ids.removeLast();
                     }
+                } else {
+                    nextId = ids.removeLast();
                 }
             } catch (IllegalArgumentException e) {
                 ExceptionCleaner.cleanException(e);
