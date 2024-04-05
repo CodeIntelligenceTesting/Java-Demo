@@ -80,7 +80,7 @@ public class CarCategoryController {
     }
 
     /**
-     * Robust PUT endpoint. No issues in this one.
+     * Currently robust PUT endpoint. Things might break in the future.
      * @param id category id
      * @param role requesting user role definition
      * @param dto mapped JSON DTO that contains the new information to be stored

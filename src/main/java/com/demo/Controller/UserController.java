@@ -46,7 +46,7 @@ public class UserController {
     }
 
     /**
-     * Secure GET endpoint that returns all user objects as collection.
+     * Currently secure GET endpoint that returns all user objects as collection.
      * @param role requesting user role definition
      * @return collection of user objects
      */
@@ -81,7 +81,7 @@ public class UserController {
     }
 
     /**
-     * Secure DELETE endpoint without issues.
+     * Currently secure DELETE endpoint without issues yet.
      * @param id category id
      * @param role requesting user role definition
      * @return if operation was successful
