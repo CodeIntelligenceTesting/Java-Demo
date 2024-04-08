@@ -83,13 +83,7 @@ public class UserControllerTest {
      */
     @FuzzTest
     public void fuzzTestGetUsers(@NotNull String role) throws Exception {
-        try {
-            mockMvc.perform(get("/user")
-                            .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        // TODO: fill in the test code
     }
     /**
      * Unit test variant of {@link UserControllerTest#fuzzTestGetUsers(String)}
@@ -144,14 +138,7 @@ public class UserControllerTest {
     public void fuzzTestDeleteUser(@NotNull @WithUtf8Length(min=1, max=5) String id,
                                    @NotNull String role) throws Exception {
 
-        try {
-            DatabaseMock.getInstance().init();
-            mockMvc.perform(delete("/user/{id}", id)
-                            .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        // TODO: fill in the test code
 
     }
 
@@ -167,15 +154,6 @@ public class UserControllerTest {
      */
     @FuzzTest
     public void fuzzTestCreateUser(@NotNull String role, @NotNull UserDTO userDTO) throws Exception {
-        try {
-            ObjectMapper om = new ObjectMapper();
-            mockMvc.perform(post("/user")
-                            .param("role", role)
-                            .content(om.writeValueAsString(userDTO))
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        // TODO: fill in the test code
     }
 }

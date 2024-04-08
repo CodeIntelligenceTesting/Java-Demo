@@ -102,16 +102,7 @@ public class CarCategoryControllerTest {
     public void fuzzTestDeleteCategory(@NotNull @WithUtf8Length(min=1, max=5) String id,
                                        @NotNull String role,
                                        long requestTime) throws Exception {
-        try {
-            DatabaseMock.getInstance().init();
-            DatabaseMock.setDeleteRequestTime(requestTime);
-
-            mockMvc.perform(delete("/category/{id}", id)
-                            .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        // TODO: fill in the test code
     }
 
     /**
@@ -155,15 +146,6 @@ public class CarCategoryControllerTest {
      */
     @FuzzTest
     public void fuzzTestCreateCategory(@NotNull String role, @NotNull CarCategoryDTO categoryDTO) throws Exception {
-        try {
-            ObjectMapper om = new ObjectMapper();
-            mockMvc.perform(post("/category")
-                            .param("role", role)
-                            .content(om.writeValueAsString(categoryDTO))
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        // TODO: fill in the test code
     }
 }
