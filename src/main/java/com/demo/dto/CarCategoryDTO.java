@@ -22,17 +22,13 @@ public class CarCategoryDTO {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public UserDTO.Role getVisibleTo() {
         return visibleTo;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.verifyCreationDate();
-        this.creationDate = creationDate;
+    public String getCreationDate() {
+        return creationDate;
     }
 
     /**
