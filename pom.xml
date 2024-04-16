@@ -57,6 +57,7 @@
             <extension>
                 <groupId>com.code-intelligence</groupId>
                 <artifactId>cifuzz-maven-extension</artifactId>
+                <version>1.7.0</version>
             </extension>
         </extensions>
     </build>
