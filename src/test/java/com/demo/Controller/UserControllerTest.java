@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
 @AutoConfigureMockMvc(print = MockMvcPrint.NONE)
@@ -27,11 +28,56 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     /**
+     * Fuzz test function that checks the {@link UserController#updateOrCreateUser(String, String, UserDTO)} endpoint.
+     * <p/>
+     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code> or
+     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code>.
+     * Finds a security issue in form of an SQL Injection vulnerability.
+     * <p/>
+     * @param id parameter filled in by the fuzzer.
+     * @param role parameter filled in by the fuzzer.
+     * @throws Exception uncaught exceptions for the fuzzer to detect issues.
+     */
+    @FuzzTest
+    public void fuzzTestUpdateOrCreateUser(@UrlSegment String id,
+                                           @NotNull String role,
+                                           @NotNull UserDTO userDTO) throws Exception {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            mockMvc.perform(put("/user/{id}", id)
+                            .param("role", role)
+                            .content(om.writeValueAsString(userDTO))
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(CustomMatchers.isNot5xxServerError());
+        } catch (IllegalArgumentException e) {
+            ExceptionCleaner.cleanException(e);
+        }
+    }
+
+    /**
+     * Example unit Test for user-controller put endpoint.
+     * @throws Exception uncaught exception
+     */
+    @Test
+    public void unitTestUpdateOrCreateUser() throws Exception {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            mockMvc.perform(put("/user/{id}", "id")
+                            .param("role", "DEFAULT_ROLE")
+                            .content(om.writeValueAsString(new UserDTO()))
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isForbidden());
+        } catch (IllegalArgumentException e) {
+            ExceptionCleaner.cleanException(e);
+        }
+    }
+
+    /**
      * Fuzz test function that checks the {@link UserController#getUsers(String)} endpoint.
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestGetUsers</code> or
      * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestGetUsers</code>.
-     * Code contains no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
+     * Code contains currently no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
      * <p/>
      * @param role parameter filled in by the fuzzer.
      * @throws Exception uncaught exceptions for the fuzzer to detect issues.
@@ -89,7 +135,7 @@ public class UserControllerTest {
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestDeleteUser</code> or
      * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestDeleteUser</code>.
-     * Code contains no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
+     * Code contains currently no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
      * <p/>
      * @param id parameter filled in by the fuzzer.
      * @param role parameter filled in by the fuzzer.
@@ -111,34 +157,7 @@ public class UserControllerTest {
     }
 
     /**
-     * Fuzz test function that checks the {@link UserController#updateOrCreateUser(String, String, UserDTO)} endpoint.
-     * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code> or
-     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code>.
-     * Finds a security issue in form of an SQL Injection vulnerability.
-     * <p/>
-     * @param id parameter filled in by the fuzzer.
-     * @param role parameter filled in by the fuzzer.
-     * @throws Exception uncaught exceptions for the fuzzer to detect issues.
-     */
-    @FuzzTest
-    public void fuzzTestUpdateOrCreateUser(@UrlSegment String id,
-                                           @NotNull String role,
-                                           @NotNull UserDTO userDTO) throws Exception {
-        try {
-        ObjectMapper om = new ObjectMapper();
-            mockMvc.perform(put("/user/{id}", id)
-                            .param("role", role)
-                            .content(om.writeValueAsString(userDTO))
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
-    }
-
-    /**
-     * Fuzz test function that checks the {@link UserController#createUser(String, UserDTO)}endpoint.
+     * Fuzz test function that checks the {@link UserController#createUser(String, UserDTO)} endpoint.
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestCreateUser</code> or
      * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestCreateUser</code>.

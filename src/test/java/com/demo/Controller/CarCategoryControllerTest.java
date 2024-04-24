@@ -119,7 +119,7 @@ public class CarCategoryControllerTest {
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestUpdateOrCreateCategory</code> or
      * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestUpdateOrCreateCategory</code>.
-     * Code contains no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
+     * Code contains currently no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
      * <p/>
      * @param id parameter filled in by the fuzzer.
      * @param role parameter filled in by the fuzzer.

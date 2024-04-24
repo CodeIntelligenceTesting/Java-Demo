@@ -16,7 +16,7 @@ public class CarCategoryController {
 
     /**
      * GET endpoint with a robustness issue, that returns all categories.
-     * It's never checked if vip categories exist before adding them to the general list
+     * It never checks if vip categories exist before adding them to the general list
      * @param role querying user role
      * @return a collection of the DTO objects. Will be sent to the browser as JSON list.
      */
@@ -80,7 +80,7 @@ public class CarCategoryController {
     }
 
     /**
-     * Robust PUT endpoint. No issues in this one.
+     * Currently robust PUT endpoint. Things might break in the future.
      * @param id category id
      * @param role requesting user role definition
      * @param dto mapped JSON DTO that contains the new information to be stored

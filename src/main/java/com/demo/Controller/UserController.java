@@ -24,21 +24,29 @@ public class UserController {
     private final Connection conn;
 
     /**
-     * Default Constructor initialises an example db that is used to display SQLInjection findings later.
+     * PUT endpoint with SQLInjection vulnerability. Used to update user information.
+     * @param id category id
+     * @param role requesting user role definition
+     * @param dto new user data
+     * @return ID of changed user
      */
-    public UserController() throws SQLException {
-        JdbcDataSource ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:mem:database.db");
-        conn = ds.getConnection();
+    @PutMapping("/user/{id}")
+    public String updateOrCreateUser(@PathVariable String id, @RequestParam (required = false) String role, @RequestBody UserDTO dto) {
+        try {
+            if (new String(Base64.getDecoder().decode(role)).equals("Admin")) {
+                // got here if the role value was "QURNSU4="
+                if ((dto.getId() ^ 1110001) == 1000001110) {
+                    triggerSQLInjection(id);
+                }
 
-        // A dummy database is dynamically created
-        conn.createStatement().execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY PRIMARY KEY, username VARCHAR(50), name VARCHAR(50), password VARCHAR(50))");
-        conn.createStatement().execute("INSERT INTO users (username, name, password) VALUES ('admin', 'Administrator', 'passw0rd')");
-        conn.createStatement().execute("INSERT INTO users (username, name, password) VALUES ('john', ' John', 'hello123')");
+                return UserHandler.updateUser(dto, id);
+            }
+        } catch (Exception ignored) {}
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
 
     /**
-     * Secure GET endpoint that returns all user objects as collection.
+     * Currently secure GET endpoint that returns all user objects as collection.
      * @param role requesting user role definition
      * @return collection of user objects
      */
@@ -73,7 +81,7 @@ public class UserController {
     }
 
     /**
-     * Secure DELETE endpoint without issues.
+     * Currently secure DELETE endpoint without issues yet.
      * @param id category id
      * @param role requesting user role definition
      * @return if operation was successful
@@ -87,28 +95,6 @@ public class UserController {
             // Not clean but easiest way to return a 403.
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-    }
-
-    /**
-     * PUT endpoint with SQLInjection vulnerability. Used to update user information.
-     * @param id category id
-     * @param role requesting user role definition
-     * @param dto new user data
-     * @return ID of changed user
-     */
-    @PutMapping("/user/{id}")
-    public String updateOrCreateUser(@PathVariable String id, @RequestParam (required = false) String role, @RequestBody UserDTO dto) {
-        try {
-            if (new String(Base64.getDecoder().decode(role)).equals("Admin")) {
-                // got here if the role value was "QURNSU4="
-                if ((dto.getId() ^ 1110001) == 1000001110) {
-                    triggerSQLInjection(id);
-                }
-
-                return UserHandler.updateUser(dto, id);
-            }
-        } catch (Exception ignored) {}
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
 
     /**
@@ -166,5 +152,19 @@ public class UserController {
         try {
             ctx.search(base, "(&(uid=foo)(cn=bar))", new SearchControls());
         } catch (Exception ignored){}
+    }
+
+    /**
+     * Default Constructor initialises an example db that is used to display SQLInjection findings later.
+     */
+    public UserController() throws SQLException {
+        JdbcDataSource ds = new JdbcDataSource();
+        ds.setURL("jdbc:h2:mem:database.db");
+        conn = ds.getConnection();
+
+        // A dummy database is dynamically created
+        conn.createStatement().execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY PRIMARY KEY, username VARCHAR(50), name VARCHAR(50), password VARCHAR(50))");
+        conn.createStatement().execute("INSERT INTO users (username, name, password) VALUES ('admin', 'Administrator', 'passw0rd')");
+        conn.createStatement().execute("INSERT INTO users (username, name, password) VALUES ('john', ' John', 'hello123')");
     }
 }
