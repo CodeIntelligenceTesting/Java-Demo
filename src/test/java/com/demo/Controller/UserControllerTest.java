@@ -5,7 +5,6 @@ import com.code_intelligence.jazzer.mutation.annotation.NotNull;
 import com.code_intelligence.jazzer.mutation.annotation.UrlSegment;
 import com.demo.dto.UserDTO;
 import com.demo.helper.DatabaseMock;
-import com.demo.helper.ExceptionCleaner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +41,12 @@ public class UserControllerTest {
     public void fuzzTestUpdateOrCreateUser(@UrlSegment String id,
                                            @NotNull String role,
                                            @NotNull UserDTO userDTO) throws Exception {
-        try {
-            ObjectMapper om = new ObjectMapper();
-            mockMvc.perform(put("/user/{id}", id)
-                            .param("role", role)
-                            .content(om.writeValueAsString(userDTO))
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(statusIsNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        ObjectMapper om = new ObjectMapper();
+        mockMvc.perform(put("/user/{id}", id)
+                        .param("role", role)
+                        .content(om.writeValueAsString(userDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(statusIsNot5xxServerError());
     }
 
     /**
@@ -60,16 +55,12 @@ public class UserControllerTest {
      */
     @Test
     public void unitTestUpdateOrCreateUser() throws Exception {
-        try {
-            ObjectMapper om = new ObjectMapper();
-            mockMvc.perform(put("/user/{id}", "id")
-                            .param("role", "DEFAULT_ROLE")
-                            .content(om.writeValueAsString(new UserDTO()))
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isForbidden());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        ObjectMapper om = new ObjectMapper();
+        mockMvc.perform(put("/user/{id}", "id")
+                        .param("role", "DEFAULT_ROLE")
+                        .content(om.writeValueAsString(new UserDTO()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
     }
 
     /**
@@ -84,13 +75,9 @@ public class UserControllerTest {
      */
     @FuzzTest
     public void fuzzTestGetUsers(@NotNull String role) throws Exception {
-        try {
-            mockMvc.perform(get("/user")
-                            .param("role", role))
-                    .andExpect(statusIsNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        mockMvc.perform(get("/user")
+                        .param("role", role))
+                .andExpect(statusIsNot5xxServerError());
     }
     /**
      * Unit test variant of {@link UserControllerTest#fuzzTestGetUsers(String)}
@@ -98,13 +85,9 @@ public class UserControllerTest {
      */
     @Test
     public void unitTestGetUsers() throws Exception {
-        try {
-            mockMvc.perform(get("/user")
-                            .param("role", "DEFAULT"))
-                    .andExpect(statusIsNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        mockMvc.perform(get("/user")
+                        .param("role", "DEFAULT"))
+                .andExpect(statusIsNot5xxServerError());
     }
 
     /**
@@ -120,14 +103,9 @@ public class UserControllerTest {
      */
     @FuzzTest
     public void fuzzTestGetUser(@UrlSegment String id, @NotNull String role) throws Exception {
-        try {
-            mockMvc.perform(get("/user/{id}", id)
-                            .param("role", role))
-                    .andExpect(statusIsNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
-
+        mockMvc.perform(get("/user/{id}", id)
+                        .param("role", role))
+                .andExpect(statusIsNot5xxServerError());
     }
 
     /**
@@ -144,16 +122,10 @@ public class UserControllerTest {
     @FuzzTest
     public void fuzzTestDeleteUser(@UrlSegment String id,
                                    @NotNull String role) throws Exception {
-
-        try {
-            DatabaseMock.getInstance().init();
-            mockMvc.perform(delete("/user/{id}", id)
-                            .param("role", role))
-                    .andExpect(statusIsNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
-
+        DatabaseMock.getInstance().init();
+        mockMvc.perform(delete("/user/{id}", id)
+                        .param("role", role))
+                .andExpect(statusIsNot5xxServerError());
     }
 
     /**
@@ -168,15 +140,11 @@ public class UserControllerTest {
      */
     @FuzzTest
     public void fuzzTestCreateUser(@NotNull String role, @NotNull UserDTO userDTO) throws Exception {
-        try {
-            ObjectMapper om = new ObjectMapper();
-            mockMvc.perform(post("/user")
-                            .param("role", role)
-                            .content(om.writeValueAsString(userDTO))
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(statusIsNot5xxServerError());
-        } catch (IllegalArgumentException e) {
-            ExceptionCleaner.cleanException(e);
-        }
+        ObjectMapper om = new ObjectMapper();
+        mockMvc.perform(post("/user")
+                        .param("role", role)
+                        .content(om.writeValueAsString(userDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(statusIsNot5xxServerError());
     }
 }
