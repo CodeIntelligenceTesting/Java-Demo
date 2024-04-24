@@ -5,8 +5,6 @@ import com.code_intelligence.jazzer.mutation.annotation.NotNull;
 import com.code_intelligence.jazzer.mutation.annotation.UrlSegment;
 import com.code_intelligence.jazzer.mutation.annotation.WithSize;
 import com.demo.dto.CarDTO;
-import com.demo.helper.CustomMatchers;
-import com.demo.helper.ExceptionCleaner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +14,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.EmptyStackException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Stack;
 
+import static com.code_intelligence.jazzer.junit.SpringFuzzTestHelper.statusIsNot5xxServerError;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest
@@ -40,7 +37,7 @@ public class CarControllerTest {
      */
     @FuzzTest
     public void fuzzTestCarEndpoints(@NotNull @WithSize(min = 5, max = 15) List< @NotNull Integer> functionOrder,
-                                     @NotNull @WithSize(min = 5, max = 15) List< @NotNull @WithSize(min = 5, max = 15) String> ids,
+                                     @NotNull @WithSize(min = 5, max = 15) List< @UrlSegment String> ids,
                                      @NotNull @WithSize(min = 5, max = 15) List< @NotNull CarDTO> dtos,
                                      @NotNull @WithSize(min = 5, max = 15) List<Boolean> reuseReturnedIds) throws Exception {
         ObjectMapper om = new ObjectMapper();
@@ -54,25 +51,25 @@ public class CarControllerTest {
                 Integer last = functionOrder.removeLast();
                 if (last == 0) {
                     mockMvc.perform(get("/car"))
-                            .andExpect(CustomMatchers.isNot5xxServerError());
+                            .andExpect(statusIsNot5xxServerError());
                 } else if (last == 1) {
                     mockMvc.perform(get("/car/{id}", nextId))
-                            .andExpect(CustomMatchers.isNot5xxServerError());
+                            .andExpect(statusIsNot5xxServerError());
                 } else if (last == 2) {
                     lastReturnedId = mockMvc.perform(delete("/car/{id}", nextId))
-                            .andExpect(CustomMatchers.isNot5xxServerError())
+                            .andExpect(statusIsNot5xxServerError())
                             .andReturn().getResponse().getContentAsString();
                 } else if (last == 3) {
                     lastReturnedId = mockMvc.perform(put("/car/{id}", nextId)
                                     .content(om.writeValueAsString(dtos.removeLast()))
                                     .contentType(MediaType.APPLICATION_JSON))
-                            .andExpect(CustomMatchers.isNot5xxServerError())
+                            .andExpect(statusIsNot5xxServerError())
                             .andReturn().getResponse().getContentAsString();
                 } else {
                     lastReturnedId = mockMvc.perform(post("/car")
                                     .content(om.writeValueAsString(dtos.removeLast()))
                                     .contentType(MediaType.APPLICATION_JSON))
-                            .andExpect(CustomMatchers.isNot5xxServerError())
+                            .andExpect(statusIsNot5xxServerError())
                             .andReturn().getResponse().getContentAsString();
                 }
                 if (lastReturnedId != null) {
@@ -85,9 +82,8 @@ public class CarControllerTest {
                 } else {
                     nextId = ids.removeLast();
                 }
-            } catch (IllegalArgumentException e) {
-                ExceptionCleaner.cleanException(e);
             } catch (NoSuchElementException ignored){
+                // catching and suppressing if a list does not contain enough values to do the functions calls
                 break;
             }
         }
@@ -100,10 +96,10 @@ public class CarControllerTest {
         mockMvc.perform(put("/car/{id}", "0")
                         .content(om.writeValueAsString(dto))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(CustomMatchers.isNot5xxServerError());
+                .andExpect(statusIsNot5xxServerError());
         mockMvc.perform(post("/car")
                         .content(om.writeValueAsString(dto))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(CustomMatchers.isNot5xxServerError());
+                .andExpect(statusIsNot5xxServerError());
     }
 }
