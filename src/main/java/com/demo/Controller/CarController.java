@@ -9,7 +9,7 @@ import java.util.Collection;
 @RestController()
 public class CarController {
     /**
-     * Secure GET endpoint that returns all cars.
+     * Currently secure GET endpoint that returns all cars.
      * @return a collection of the DTO objects. Will be sent to the browser as JSON list.
      */
     @GetMapping("/car")
@@ -18,7 +18,7 @@ public class CarController {
     }
 
     /**
-     * Secure GET endpoint that returns the car with the specified id.
+     * Currently secure GET endpoint that returns the car with the specified id.
      * @param id car id
      * @return the DTO object. Will be sent to the browser as JSON object.
      */
@@ -28,7 +28,7 @@ public class CarController {
     }
 
     /**
-     * Secure DELETE endpoint that deletes the car with the specified id.
+     * Currently secure DELETE endpoint that deletes the car with the specified id.
      * @param id car id
      * @return JSON boolean
      */
@@ -49,7 +49,7 @@ public class CarController {
     }
 
     /**
-     * Secure PUT endpoint that creates or updates the car with the specified id.
+     * Currently secure PUT endpoint that creates or updates the car with the specified id.
      * @param id car id
      */
     @PutMapping("/car/{id}")
