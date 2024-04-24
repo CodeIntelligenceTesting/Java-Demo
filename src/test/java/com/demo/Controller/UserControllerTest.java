@@ -3,9 +3,7 @@ package com.demo.Controller;
 import com.code_intelligence.jazzer.junit.FuzzTest;
 import com.code_intelligence.jazzer.mutation.annotation.NotNull;
 import com.code_intelligence.jazzer.mutation.annotation.UrlSegment;
-import com.code_intelligence.jazzer.mutation.annotation.WithUtf8Length;
 import com.demo.dto.UserDTO;
-import com.demo.helper.CustomMatchers;
 import com.demo.helper.DatabaseMock;
 import com.demo.helper.ExceptionCleaner;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrint;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static com.code_intelligence.jazzer.junit.SpringFuzzTestHelper.statusIsNot5xxServerError;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,7 +48,7 @@ public class UserControllerTest {
                             .param("role", role)
                             .content(om.writeValueAsString(userDTO))
                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -87,7 +87,7 @@ public class UserControllerTest {
         try {
             mockMvc.perform(get("/user")
                             .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -101,7 +101,7 @@ public class UserControllerTest {
         try {
             mockMvc.perform(get("/user")
                             .param("role", "DEFAULT"))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -123,7 +123,7 @@ public class UserControllerTest {
         try {
             mockMvc.perform(get("/user/{id}", id)
                             .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -149,7 +149,7 @@ public class UserControllerTest {
             DatabaseMock.getInstance().init();
             mockMvc.perform(delete("/user/{id}", id)
                             .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -174,7 +174,7 @@ public class UserControllerTest {
                             .param("role", role)
                             .content(om.writeValueAsString(userDTO))
                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
