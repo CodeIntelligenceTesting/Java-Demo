@@ -14,3 +14,6 @@ The project contains multiple examples:
   Multiple examples ranging from simple to more complex showcasing the testing of APIs for error 5xx.
 * [Security Examples](src/test/java/com/demo/Controller/UserControllerTest.java):
   Multiple example showing how to use fuzz testing to check for security vulnerabilities in webservers.
+* [Advanced Example](src/test/java/com/demo/Controller/CarControllerTest.java):
+  An advanced example that showcases how fuzzing can be used in advanced ways to find issues and bugs that only appear 
+  if functions are called in a specific order.

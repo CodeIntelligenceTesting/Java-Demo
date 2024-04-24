@@ -39,7 +39,7 @@ public class CarControllerTest {
     public void fuzzTestCarEndpoints(@NotNull @WithSize(min = 5, max = 15) List< @NotNull Integer> functionOrder,
                                      @NotNull @WithSize(min = 5, max = 15) List< @UrlSegment String> ids,
                                      @NotNull @WithSize(min = 5, max = 15) List< @NotNull CarDTO> dtos,
-                                     @NotNull @WithSize(min = 5, max = 15) List<Boolean> reuseReturnedIds) throws Exception {
+                                     @NotNull @WithSize(min = 5, max = 15) List< @NotNull Boolean> reuseReturnedIds) throws Exception {
         ObjectMapper om = new ObjectMapper();
         String nextId = ids.removeLast();
         String lastReturnedId = null;
