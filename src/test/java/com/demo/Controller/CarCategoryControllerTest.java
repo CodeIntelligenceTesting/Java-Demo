@@ -1,12 +1,9 @@
 package com.demo.Controller;
 
 import com.code_intelligence.jazzer.junit.FuzzTest;
-import com.code_intelligence.jazzer.junit.Lifecycle;
 import com.code_intelligence.jazzer.mutation.annotation.NotNull;
 import com.code_intelligence.jazzer.mutation.annotation.UrlSegment;
-import com.code_intelligence.jazzer.mutation.annotation.WithUtf8Length;
 import com.demo.dto.CarCategoryDTO;
-import com.demo.helper.CustomMatchers;
 import com.demo.helper.DatabaseMock;
 import com.demo.helper.ExceptionCleaner;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.code_intelligence.jazzer.junit.SpringFuzzTestHelper.statusIsNot5xxServerError;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest
@@ -43,7 +41,7 @@ public class CarCategoryControllerTest {
         try {
             mockMvc.perform(get("/category")
                             .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -58,7 +56,7 @@ public class CarCategoryControllerTest {
         try {
             mockMvc.perform(get("/category")
                             .param("role", "DEFAULT"))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -80,7 +78,7 @@ public class CarCategoryControllerTest {
         try {
             mockMvc.perform(get("/category/{id}", id)
                             .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -108,7 +106,7 @@ public class CarCategoryControllerTest {
 
             mockMvc.perform(delete("/category/{id}", id)
                             .param("role", role))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -136,7 +134,7 @@ public class CarCategoryControllerTest {
                             .param("role", role)
                             .content(om.writeValueAsString(categoryDTO))
                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
@@ -161,7 +159,7 @@ public class CarCategoryControllerTest {
                             .param("role", role)
                             .content(om.writeValueAsString(categoryDTO))
                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(CustomMatchers.isNot5xxServerError());
+                    .andExpect(statusIsNot5xxServerError());
         } catch (IllegalArgumentException e) {
             ExceptionCleaner.cleanException(e);
         }
