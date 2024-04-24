@@ -42,3 +42,4 @@ build/
 **/*.tar.gz
 
 **/*.zip
+**/.attach_**
