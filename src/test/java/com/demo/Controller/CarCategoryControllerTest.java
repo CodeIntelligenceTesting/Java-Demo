@@ -76,7 +76,7 @@ public class CarCategoryControllerTest {
      * @throws Exception uncaught exceptions for the fuzzer to detect issues.
      */
     @FuzzTest
-    public void fuzzTestGetCategory(@NotNull @WithUtf8Length(min=1, max=5) String id, @NotNull String role) throws Exception {
+    public void fuzzTestGetCategory(@UrlSegment String id, @NotNull String role) throws Exception {
         try {
             mockMvc.perform(get("/category/{id}", id)
                             .param("role", role))
@@ -99,7 +99,7 @@ public class CarCategoryControllerTest {
      */
     @Timeout(5)
     @FuzzTest
-    public void fuzzTestDeleteCategory(@NotNull @WithUtf8Length(min=1, max=5) String id,
+    public void fuzzTestDeleteCategory(@UrlSegment String id,
                                        @NotNull String role,
                                        long requestTime) throws Exception {
         try {
@@ -119,7 +119,7 @@ public class CarCategoryControllerTest {
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestUpdateOrCreateCategory</code> or
      * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestUpdateOrCreateCategory</code>.
-     * Code contains no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
+     * Code contains currently no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
      * <p/>
      * @param id parameter filled in by the fuzzer.
      * @param role parameter filled in by the fuzzer.
@@ -127,7 +127,7 @@ public class CarCategoryControllerTest {
      * @throws Exception uncaught exceptions for the fuzzer to detect issues.
      */
     @FuzzTest
-    public void fuzzTestUpdateOrCreateCategory(@NotNull @WithUtf8Length(min=1, max=5) String id,
+    public void fuzzTestUpdateOrCreateCategory(@UrlSegment String id,
                                                @NotNull String role,
                                                @NotNull CarCategoryDTO categoryDTO) throws Exception {
         try {
