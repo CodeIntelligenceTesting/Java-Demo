@@ -25,10 +25,15 @@ public class CarCategoryDTO {
     private int seats;
     private String exampleCar;
     private UserDTO.Role visibleTo;
+    private String creationDate;
 
     public CarCategoryDTO(){}
 
-    public CarCategoryDTO(String description, TrunkSize trunkSize, int seats, String exampleCar, UserDTO.Role visibleTo) {
+    public CarCategoryDTO(String description,
+                          TrunkSize trunkSize,
+                          int seats,
+                          String exampleCar,
+                          UserDTO.Role visibleTo) {
         this.description = description;
         this.trunkSize = trunkSize;
         this.seats = seats;
@@ -74,5 +79,13 @@ public class CarCategoryDTO {
 
     public void setVisibleTo(UserDTO.Role visibleTo) {
         this.visibleTo = visibleTo;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 }

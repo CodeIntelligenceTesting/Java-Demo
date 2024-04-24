@@ -99,7 +99,7 @@ public class CarCategoryController {
 
     /**
      * POST endpoint with a robustness issue. Tries to create new objects and letting the server chose the new ID.
-     * Tries to access DB directly before checking if it's initialised.
+     * Error is an uncaught runtime exception when verifying the datetime.
      * Issue is hidden in {@link CarCategoryHandler#createCategory(CarCategoryDTO)}.
      * @param role requesting user role definition
      * @param dto mapped JSON DTO that contains the new information to be stored

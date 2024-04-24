@@ -124,7 +124,7 @@ public class CarCategoryControllerTest {
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestCreateCategory</code> or
      * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestCreateCategory</code>.
-     * Finds a robustness issue in form of an uncaught DatabaseNotInitialisedException exception.
+     * Finds a robustness issue in form of an uncaught DateTimeParseException exception.
      * <p/>
      * @param role parameter filled in by the fuzzer.
      * @param categoryDTO parameter filled in by the fuzzer.
