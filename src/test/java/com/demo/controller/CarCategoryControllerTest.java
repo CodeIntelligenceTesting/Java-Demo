@@ -1,4 +1,4 @@
-package com.demo.Controller;
+package com.demo.controller;
 
 import com.code_intelligence.jazzer.junit.FuzzTest;
 import com.code_intelligence.jazzer.mutation.annotation.NotNull;
