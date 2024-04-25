@@ -19,21 +19,11 @@ public class CarCategoryHandler {
     private static final DatabaseMock db = DatabaseMock.getInstance();
 
     /**
-     * Helper function to make sure DB connection is initialized
-     */
-    private static void dbInitCheck(){
-        if (db.isInitialized()) {
-            db.init();
-        }
-    }
-
-    /**
      * Handler function with robustness issue, that handles querying of all vip categories
      * Called by {@link CarCategoryController#getCategories(String)}.
      * @return collection of category objects or null if no categories found
      */
     public static Collection<CarCategoryDTO> returnVIPCategories(){
-        dbInitCheck();
         Collection<CarCategoryDTO> vipCategories = null;
         for (CarCategoryDTO category : db.getAllCategories()) {
             if (category.getVisibleTo() == UserDTO.Role.VIP_USER) {
@@ -54,7 +44,6 @@ public class CarCategoryHandler {
      */
     public static Collection<CarCategoryDTO> returnDefaultCategories(){
         Collection<CarCategoryDTO> defaultCategories = new ArrayList<>();
-        dbInitCheck();
         for (CarCategoryDTO category : db.getAllCategories()) {
             if (category.getVisibleTo() == UserDTO.Role.DEFAULT_USER) {
                 defaultCategories.add(category);
@@ -70,7 +59,6 @@ public class CarCategoryHandler {
      * @return category dto or null
      */
     public static CarCategoryDTO returnSpecificCategory(String id) {
-        dbInitCheck();
         return db.getCategoryWithId(id);
     }
 
@@ -83,7 +71,6 @@ public class CarCategoryHandler {
      * @return if deletion was successful. False if category did not exist.
      */
     public static boolean deleteCategory(String id) {
-        dbInitCheck();
         return db.deleteCategory(id);
     }
 
@@ -95,7 +82,6 @@ public class CarCategoryHandler {
      * @return id of newly saved category.
      */
     public static String createCategory(CarCategoryDTO categoryDTO){
-        dbInitCheck();
         //Not catching WrongDateTimeFormat exceptions
         if (CarCategoryHandler.verifyCreationDate(categoryDTO)) {
             return updateCategory(categoryDTO, db.getNextFreeCategoryId());
@@ -112,7 +98,6 @@ public class CarCategoryHandler {
      * @return the id of the changed object
      */
     public static String updateCategory(CarCategoryDTO categoryDTO, String id) {
-        dbInitCheck();
         db.putCategory(id, categoryDTO);
         return id;
     }

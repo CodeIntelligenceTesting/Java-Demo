@@ -87,7 +87,6 @@ public class CarCategoryControllerTest {
     public void fuzzTestDeleteCategory(@UrlSegment String id,
                                        @NotNull String role,
                                        long requestTime) throws Exception {
-        DatabaseMock.getInstance().init();
         DatabaseMock.setDeleteRequestTime(requestTime);
 
         mockMvc.perform(delete("/category/{id}", id)
