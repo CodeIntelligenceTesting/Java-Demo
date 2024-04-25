@@ -1,6 +1,6 @@
 package com.demo.handler;
 
-import com.demo.Controller.CarCategoryController;
+import com.demo.controller.CarCategoryController;
 import com.demo.dto.CarCategoryDTO;
 import com.demo.dto.UserDTO;
 import com.demo.helper.DatabaseMock;

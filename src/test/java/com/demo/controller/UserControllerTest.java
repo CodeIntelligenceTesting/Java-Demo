@@ -1,10 +1,9 @@
-package com.demo.Controller;
+package com.demo.controller;
 
 import com.code_intelligence.jazzer.junit.FuzzTest;
 import com.code_intelligence.jazzer.mutation.annotation.NotNull;
 import com.code_intelligence.jazzer.mutation.annotation.UrlSegment;
 import com.demo.dto.UserDTO;
-import com.demo.helper.DatabaseMock;
 import com.demo.helper.MockLdapContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

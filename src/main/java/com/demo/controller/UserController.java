@@ -1,4 +1,4 @@
-package com.demo.Controller;
+package com.demo.controller;
 
 import com.demo.dto.UserDTO;
 import com.demo.handler.UserHandler;
@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.ldap.LdapContext;
 import java.sql.Connection;
