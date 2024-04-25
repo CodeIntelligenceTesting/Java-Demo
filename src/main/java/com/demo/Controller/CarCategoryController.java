@@ -1,4 +1,4 @@
-package com.demo.controller;
+package com.demo.Controller;
 
 import com.demo.dto.CarCategoryDTO;
 import com.demo.dto.UserDTO;
