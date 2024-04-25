@@ -11,7 +11,7 @@ import javax.naming.ldap.*;
 /**
  * Mock LdapContex implementation to test LdapInjection hook configuration.
  *
- * <p>Only {@code com.example.ldap.MockLdapContext#search(java.lang.String, java.lang.String,
+ * <p>Only {@link com.demo.helper.MockLdapContext#search(java.lang.String, java.lang.String,
  * javax.naming.directory.SearchControls)} is implemented to validate DN and filer query.
  */
 public class MockLdapContext implements LdapContext {

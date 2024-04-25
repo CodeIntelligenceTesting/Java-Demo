@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
+import javax.naming.ldap.LdapContext;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Base64;
@@ -22,6 +23,7 @@ import java.util.Collection;
 @RestController()
 public class UserController {
     private final Connection conn;
+    private static LdapContext ldapContext;
 
     /**
      * PUT endpoint with SQLInjection vulnerability. Used to update user information.
@@ -146,11 +148,10 @@ public class UserController {
      * @param ou Organizational Unit value that is not sanitized
      */
     private void triggerLDAPInjection(String ou) {
-        final DirContext ctx = new MockLdapContext();
         // usage of not sanitized input
         String base = "ou=" + ou + ",dc=example,dc=com";
         try {
-            ctx.search(base, "(&(uid=foo)(cn=bar))", new SearchControls());
+            ldapContext.search(base, "(&(uid=foo)(cn=bar))", new SearchControls());
         } catch (Exception ignored){}
     }
 
@@ -166,5 +167,9 @@ public class UserController {
         conn.createStatement().execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY PRIMARY KEY, username VARCHAR(50), name VARCHAR(50), password VARCHAR(50))");
         conn.createStatement().execute("INSERT INTO users (username, name, password) VALUES ('admin', 'Administrator', 'passw0rd')");
         conn.createStatement().execute("INSERT INTO users (username, name, password) VALUES ('john', ' John', 'hello123')");
+    }
+
+    public static void setLdapContext(LdapContext ldapContext) {
+        UserController.ldapContext = ldapContext;
     }
 }
