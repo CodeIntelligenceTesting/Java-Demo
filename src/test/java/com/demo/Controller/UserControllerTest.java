@@ -5,6 +5,7 @@ import com.code_intelligence.jazzer.mutation.annotation.NotNull;
 import com.code_intelligence.jazzer.mutation.annotation.UrlSegment;
 import com.demo.dto.UserDTO;
 import com.demo.helper.DatabaseMock;
+import com.demo.helper.MockLdapContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +123,6 @@ public class UserControllerTest {
     @FuzzTest
     public void fuzzTestDeleteUser(@UrlSegment String id,
                                    @NotNull String role) throws Exception {
-        DatabaseMock.getInstance().init();
         mockMvc.perform(delete("/user/{id}", id)
                         .param("role", role))
                 .andExpect(statusIsNot5xxServerError());
@@ -140,6 +140,7 @@ public class UserControllerTest {
      */
     @FuzzTest
     public void fuzzTestCreateUser(@NotNull String role, @NotNull UserDTO userDTO) throws Exception {
+        UserController.setLdapContext(new MockLdapContext());
         ObjectMapper om = new ObjectMapper();
         mockMvc.perform(post("/user")
                         .param("role", role)
