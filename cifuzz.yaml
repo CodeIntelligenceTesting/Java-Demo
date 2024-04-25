@@ -33,7 +33,7 @@ engine-args:
 # - -rss_limit_mb=4096
 
 ## Maximum time to run fuzz tests. The default is to run indefinitely.
-timeout: 60m
+timeout: 30m
 
 ## By default, fuzz tests are executed in a sandbox to prevent accidental
 ## damage to the system. Set to false to run fuzz tests unsandboxed.
@@ -54,5 +54,3 @@ timeout: 60m
 
 ## Style for CI Fuzz.
 #style: plain
-
-docker-image: eclipse-temurin:21
