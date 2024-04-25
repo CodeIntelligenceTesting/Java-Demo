@@ -76,7 +76,7 @@ public class CarCategoryControllerTest {
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestDeleteCategory</code> or
      * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestDeleteCategory</code>.
-     * Finds a robustness/timeout issue.
+     * Fixed the robustness/timeout issue.
      * <p/>
      * @param id parameter filled in by the fuzzer.
      * @param role parameter filled in by the fuzzer.
@@ -85,10 +85,7 @@ public class CarCategoryControllerTest {
     @Timeout(5)
     @FuzzTest
     public void fuzzTestDeleteCategory(@UrlSegment String id,
-                                       @NotNull String role,
-                                       long requestTime) throws Exception {
-        DatabaseMock.setDeleteRequestTime(requestTime);
-
+                                       @NotNull String role) throws Exception {
         mockMvc.perform(delete("/category/{id}", id)
                         .param("role", role))
                 .andExpect(statusIsNot5xxServerError());

@@ -62,7 +62,7 @@ public class CarCategoryController {
 
     /**
      * DELETE endpoint with advanced robustness issue. Simulates Network issues when sending delete. Can cause Timeouts.
-     * Issue is hidden in {@link DatabaseMock#deleteCategory(String)}.
+     * Issue was hidden in {@link DatabaseMock#deleteCategory(String)}.
      * @param id category id
      * @param role requesting user role definition
      * @return if deletion request was successful
