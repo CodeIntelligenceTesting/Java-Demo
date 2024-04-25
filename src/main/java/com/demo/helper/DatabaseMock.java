@@ -1,6 +1,6 @@
 package com.demo.helper;
 
-import com.demo.Controller.CarCategoryController;
+import com.demo.controller.CarCategoryController;
 import com.demo.dto.CarCategoryDTO;
 import com.demo.dto.UserDTO;
 import com.demo.handler.CarCategoryHandler;
