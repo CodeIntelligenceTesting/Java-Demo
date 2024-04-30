@@ -64,9 +64,7 @@ public class CarCategoryHandler {
 
     /**
      * Handler function that attempts to delete specified category.
-     * Advanced robustness issue is hidden in the simulated network delay.
      * Called by {@link CarCategoryController#deleteCategory(String, String)}
-     * Request time is hidden here: {@link DatabaseMock#deleteCategory(String)}
      * @param id category id to delete.
      * @return if deletion was successful. False if category did not exist.
      */

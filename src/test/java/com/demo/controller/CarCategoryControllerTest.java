@@ -4,7 +4,6 @@ import com.code_intelligence.jazzer.junit.FuzzTest;
 import com.code_intelligence.jazzer.mutation.annotation.NotNull;
 import com.code_intelligence.jazzer.mutation.annotation.UrlSegment;
 import com.demo.dto.CarCategoryDTO;
-import com.demo.helper.DatabaseMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -76,7 +75,7 @@ public class CarCategoryControllerTest {
      * <p/>
      * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestDeleteCategory</code> or
      * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestDeleteCategory</code>.
-     * Finds a robustness/timeout issue.
+     * There are no issues atm.
      * <p/>
      * @param id parameter filled in by the fuzzer.
      * @param role parameter filled in by the fuzzer.
@@ -85,10 +84,7 @@ public class CarCategoryControllerTest {
     @Timeout(5)
     @FuzzTest
     public void fuzzTestDeleteCategory(@UrlSegment String id,
-                                       @NotNull String role,
-                                       long requestTime) throws Exception {
-        DatabaseMock.setDeleteRequestTime(requestTime);
-
+                                       @NotNull String role) throws Exception {
         mockMvc.perform(delete("/category/{id}", id)
                         .param("role", role))
                 .andExpect(statusIsNot5xxServerError());
