@@ -95,7 +95,7 @@ public class UserControllerTest {
      * <p/>
      * Execute test with <code>cifuzz run com.demo.controller.UserControllerTest::fuzzTestGetUser</code> or
      * <code>cifuzz container run com.demo.controller.UserControllerTest::fuzzTestGetUser</code>.
-     * Finds a security issue in form of a Remote-Code-Execution (RCE) vulnerability.
+     * Finds no issues as the security issue in form of a Remote-Code-Execution (RCE) vulnerability was fixed.
      * <p/>
      * @param id parameter filled in by the fuzzer.
      * @param role parameter filled in by the fuzzer.

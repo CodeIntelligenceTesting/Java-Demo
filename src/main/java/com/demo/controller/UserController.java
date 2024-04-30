@@ -61,7 +61,7 @@ public class UserController {
     }
 
     /**
-     * GET endpoint with a ldap injection security issue, that should return one specific user object.
+     * GET endpoint that had a remote code execution vulnerability (RCE) that is fixed for now.
      * @param id category id
      * @param role requesting user role definition
      * @return the requested user object
@@ -72,7 +72,8 @@ public class UserController {
         try {
             if (new String(Base64.getDecoder().decode(role)).equals("Admin")) {
                 // got here if the role value was "QURNSU4="
-                triggerRCE(id);
+                //"fixing" Remote-Code-Execution
+                //triggerRCE(id);
                 return user;
             }
         } catch (Exception ignored) {}
