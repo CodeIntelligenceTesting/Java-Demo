@@ -27,8 +27,8 @@ public class CarCategoryControllerTest {
     /**
      * Fuzz test function that checks the {@link CarCategoryController#getCategories(String)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestGetCategories</code> or
-     * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestGetCategories</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.CarCategoryControllerTest::fuzzTestGetCategories</code> or
+     * <code>cifuzz container run com.demo.controller.CarCategoryControllerTest::fuzzTestGetCategories</code>.
      * Finds a robustness issue in form of an uncaught NullPointerException exception.
      * <p/>
      * @param role parameter filled in by the fuzzer.
@@ -55,8 +55,8 @@ public class CarCategoryControllerTest {
     /**
      * Fuzz test function that checks the {@link CarCategoryController#getCategory(String, String)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestGetCategory</code> or
-     * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestGetCategory</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.CarCategoryControllerTest::fuzzTestGetCategory</code> or
+     * <code>cifuzz container run com.demo.controller.CarCategoryControllerTest::fuzzTestGetCategory</code>.
      * Finds a robustness issue in form of an uncaught NullPointerException exception.
      * <p/>
      * @param id parameter filled in by the fuzzer.
@@ -73,8 +73,8 @@ public class CarCategoryControllerTest {
     /**
      * Advanced Fuzz test function that checks the {@link CarCategoryController#deleteCategory(String, String)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestDeleteCategory</code> or
-     * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestDeleteCategory</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.CarCategoryControllerTest::fuzzTestDeleteCategory</code> or
+     * <code>cifuzz container run com.demo.controller.CarCategoryControllerTest::fuzzTestDeleteCategory</code>.
      * There are no issues atm.
      * <p/>
      * @param id parameter filled in by the fuzzer.
@@ -93,8 +93,8 @@ public class CarCategoryControllerTest {
     /**
      * Fuzz test function that checks the {@link CarCategoryController#updateOrCreateCategory(String, String, CarCategoryDTO)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestUpdateOrCreateCategory</code> or
-     * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestUpdateOrCreateCategory</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.CarCategoryControllerTest::fuzzTestUpdateOrCreateCategory</code> or
+     * <code>cifuzz container run com.demo.controller.CarCategoryControllerTest::fuzzTestUpdateOrCreateCategory</code>.
      * Code contains currently no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
      * <p/>
      * @param id parameter filled in by the fuzzer.
@@ -117,8 +117,8 @@ public class CarCategoryControllerTest {
     /**
      * Fuzz test function that checks the {@link CarCategoryController#createCategory(String, CarCategoryDTO)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.CarCategoryControllerTest::fuzzTestCreateCategory</code> or
-     * <code>cifuzz container run com.demo.Controller.CarCategoryControllerTest::fuzzTestCreateCategory</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.CarCategoryControllerTest::fuzzTestCreateCategory</code> or
+     * <code>cifuzz container run com.demo.controller.CarCategoryControllerTest::fuzzTestCreateCategory</code>.
      * Finds a robustness issue in form of an uncaught DateTimeParseException exception.
      * <p/>
      * @param role parameter filled in by the fuzzer.

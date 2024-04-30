@@ -29,8 +29,8 @@ public class UserControllerTest {
     /**
      * Fuzz test function that checks the {@link UserController#updateOrCreateUser(String, String, UserDTO)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code> or
-     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code> or
+     * <code>cifuzz container run com.demo.controller.UserControllerTest::fuzzTestUpdateOrCreateUser</code>.
      * Finds a security issue in form of an SQL Injection vulnerability.
      * <p/>
      * @param id parameter filled in by the fuzzer.
@@ -66,8 +66,8 @@ public class UserControllerTest {
     /**
      * Fuzz test function that checks the {@link UserController#getUsers(String)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestGetUsers</code> or
-     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestGetUsers</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.UserControllerTest::fuzzTestGetUsers</code> or
+     * <code>cifuzz container run com.demo.controller.UserControllerTest::fuzzTestGetUsers</code>.
      * Code contains currently no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
      * <p/>
      * @param role parameter filled in by the fuzzer.
@@ -93,8 +93,8 @@ public class UserControllerTest {
     /**
      * Fuzz test function that checks the {@link UserController#getUser(String, String)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestGetUser</code> or
-     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestGetUser</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.UserControllerTest::fuzzTestGetUser</code> or
+     * <code>cifuzz container run com.demo.controller.UserControllerTest::fuzzTestGetUser</code>.
      * Finds a security issue in form of a Remote-Code-Execution (RCE) vulnerability.
      * <p/>
      * @param id parameter filled in by the fuzzer.
@@ -111,8 +111,8 @@ public class UserControllerTest {
     /**
      * Fuzz test function that checks the {@link UserController#deleteUser(String, String)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestDeleteUser</code> or
-     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestDeleteUser</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.UserControllerTest::fuzzTestDeleteUser</code> or
+     * <code>cifuzz container run com.demo.controller.UserControllerTest::fuzzTestDeleteUser</code>.
      * Code contains currently no issues and testing will stop after the timeout specified in the cifuzz.yaml (Default 30m)
      * <p/>
      * @param id parameter filled in by the fuzzer.
@@ -130,8 +130,8 @@ public class UserControllerTest {
     /**
      * Fuzz test function that checks the {@link UserController#createUser(String, UserDTO)} endpoint.
      * <p/>
-     * Execute test with <code>cifuzz run com.demo.Controller.UserControllerTest::fuzzTestCreateUser</code> or
-     * <code>cifuzz container run com.demo.Controller.UserControllerTest::fuzzTestCreateUser</code>.
+     * Execute test with <code>cifuzz run com.demo.controller.UserControllerTest::fuzzTestCreateUser</code> or
+     * <code>cifuzz container run com.demo.controller.UserControllerTest::fuzzTestCreateUser</code>.
      * Finds a security issue in form of an LDAP Injection vulnerability.
      * <p/>
      * @param role parameter filled in by the fuzzer.
