@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.code_intelligence.jazzer.junit.SpringFuzzTestHelper.collectApiStats;
 import static com.code_intelligence.jazzer.junit.SpringFuzzTestHelper.statusIsNot5xxServerError;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -46,7 +47,8 @@ public class UserControllerTest {
                         .param("role", role)
                         .content(om.writeValueAsString(userDTO))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(statusIsNot5xxServerError());
+                .andExpect(statusIsNot5xxServerError())
+                .andDo(collectApiStats("/user/{id}"));
     }
 
     /**
@@ -77,7 +79,8 @@ public class UserControllerTest {
     public void fuzzTestGetUsers(@NotNull String role) throws Exception {
         mockMvc.perform(get("/user")
                         .param("role", role))
-                .andExpect(statusIsNot5xxServerError());
+                .andExpect(statusIsNot5xxServerError())
+                .andDo(collectApiStats("/user"));
     }
     /**
      * Unit test variant of {@link UserControllerTest#fuzzTestGetUsers(String)}
@@ -105,7 +108,8 @@ public class UserControllerTest {
     public void fuzzTestGetUser(@UrlSegment String id, @NotNull String role) throws Exception {
         mockMvc.perform(get("/user/{id}", id)
                         .param("role", role))
-                .andExpect(statusIsNot5xxServerError());
+                .andExpect(statusIsNot5xxServerError())
+                .andDo(collectApiStats("/user/{id}"));
     }
 
     /**
@@ -124,7 +128,8 @@ public class UserControllerTest {
                                    @NotNull String role) throws Exception {
         mockMvc.perform(delete("/user/{id}", id)
                         .param("role", role))
-                .andExpect(statusIsNot5xxServerError());
+                .andExpect(statusIsNot5xxServerError())
+                .andDo(collectApiStats("/user/{id}"));
     }
 
     /**
@@ -145,6 +150,7 @@ public class UserControllerTest {
                         .param("role", role)
                         .content(om.writeValueAsString(userDTO))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(statusIsNot5xxServerError());
+                .andExpect(statusIsNot5xxServerError())
+                .andDo(collectApiStats("/user"));
     }
 }
