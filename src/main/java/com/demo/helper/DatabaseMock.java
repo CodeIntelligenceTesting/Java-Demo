@@ -6,14 +6,12 @@ import com.demo.dto.UserDTO;
 import com.demo.handler.CarCategoryHandler;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Database Mock class used to simulate DB requests, etc.
  */
 public class DatabaseMock {
     private static final DatabaseMock database = new DatabaseMock();
-    private static long deleteRequestTime = 0;
     private DatabaseMock(){
         this.init();
     }
@@ -63,13 +61,6 @@ public class DatabaseMock {
                         "SuperSecurePassword!!!",
                         3));
     }
-
-    public static long getDeleteRequestTime() {
-        return deleteRequestTime;
-    }
-    public static void setDeleteRequestTime(long deleteRequestTime) {
-        DatabaseMock.deleteRequestTime = Math.abs(deleteRequestTime);
-    }
     public Collection<CarCategoryDTO> getAllCategories() {
         return categoryStorage.values();
     }
@@ -85,10 +76,6 @@ public class DatabaseMock {
      * @return if object was deleted successful. False if category was not stored.
      */
     public boolean deleteCategory(String id) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(deleteRequestTime);
-        } catch (Exception ignored){}
-
         return categoryStorage.remove(id) != null;
     }
     public String getNextFreeCategoryId() {
