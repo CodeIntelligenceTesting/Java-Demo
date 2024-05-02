@@ -72,8 +72,7 @@ public class UserController {
         try {
             if (new String(Base64.getDecoder().decode(role)).equals("Admin")) {
                 // got here if the role value was "QURNSU4="
-                //"fixing" Remote-Code-Execution
-                //triggerRCE(id);
+                //triggerRCE(id); //"fixing" Remote-Code-Execution
                 return user;
             }
         } catch (Exception ignored) {}
