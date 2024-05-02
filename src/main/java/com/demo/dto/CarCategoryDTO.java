@@ -12,12 +12,14 @@ public class CarCategoryDTO {
         FOUR_CASES;
 
         public static TrunkSize fromString(String enumString) {
-            return switch (enumString.toUpperCase()) {
-                case "TWO_CASES" -> TWO_CASES;
-                case "THREE_CASES" -> THREE_CASES;
-                case "FOUR_CASES" -> FOUR_CASES;
-                default -> ONE_CASE;
-            };
+            if (enumString.equalsIgnoreCase("TWO_CASES")) {
+                return TWO_CASES;
+            } else if (enumString.equalsIgnoreCase("THREE_CASES")) {
+                return THREE_CASES;
+            } else if (enumString.equalsIgnoreCase("FOUR_CASES")) {
+                return FOUR_CASES;
+            }
+            return ONE_CASE;
         }
     }
     private String description;
@@ -25,10 +27,15 @@ public class CarCategoryDTO {
     private int seats;
     private String exampleCar;
     private UserDTO.Role visibleTo;
+    private String creationDate;
 
     public CarCategoryDTO(){}
 
-    public CarCategoryDTO(String description, TrunkSize trunkSize, int seats, String exampleCar, UserDTO.Role visibleTo) {
+    public CarCategoryDTO(String description,
+                          TrunkSize trunkSize,
+                          int seats,
+                          String exampleCar,
+                          UserDTO.Role visibleTo) {
         this.description = description;
         this.trunkSize = trunkSize;
         this.seats = seats;
@@ -74,5 +81,13 @@ public class CarCategoryDTO {
 
     public void setVisibleTo(UserDTO.Role visibleTo) {
         this.visibleTo = visibleTo;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 }

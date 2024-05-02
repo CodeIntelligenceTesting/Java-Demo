@@ -1,4 +1,4 @@
-package com.demo.Controller;
+package com.demo.controller;
 
 import com.demo.dto.CarCategoryDTO;
 import com.demo.dto.UserDTO;
@@ -61,8 +61,7 @@ public class CarCategoryController {
 
 
     /**
-     * DELETE endpoint with advanced robustness issue. Simulates Network issues when sending delete. Can cause Timeouts.
-     * Issue is hidden in {@link DatabaseMock#deleteCategory(String)}.
+     * DELETE endpoint with no issue yet.
      * @param id category id
      * @param role requesting user role definition
      * @return if deletion request was successful
@@ -71,7 +70,6 @@ public class CarCategoryController {
     public boolean deleteCategory(@PathVariable String id, @RequestParam (required = false) String role) {
         if (UserDTO.Role.fromBase64String(role) == UserDTO.Role.ADMIN) {
             // got here if the role value was "QURNSU4="
-            // Request can be pending for a while and cause timeouts
             return CarCategoryHandler.deleteCategory(id);
         } else {
             // Not clean but easiest way to return a 403.
@@ -99,7 +97,7 @@ public class CarCategoryController {
 
     /**
      * POST endpoint with a robustness issue. Tries to create new objects and letting the server chose the new ID.
-     * Tries to access DB directly before checking if it's initialised.
+     * Error is an uncaught runtime exception when verifying the datetime.
      * Issue is hidden in {@link CarCategoryHandler#createCategory(CarCategoryDTO)}.
      * @param role requesting user role definition
      * @param dto mapped JSON DTO that contains the new information to be stored
